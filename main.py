@@ -28,6 +28,7 @@ resources = {
     "water": 300,
     "milk": 200,
     "coffee": 100,
+    "money": 0.00,
 }
 
 
@@ -65,22 +66,22 @@ def print_resources():
 
 def check_resources_sufficient(user_choice):
     if user_choice == "espresso":
-        if resources["water"] < MENU["espresso"]["ingredients"]["water"]:
+        if resources["water"] <= MENU["espresso"]["ingredients"]["water"]:
             print("Sorry there is not enough water.")
             return False
-        elif resources["coffee"] < MENU["espresso"]["ingredients"]["coffee"]:
+        elif resources["coffee"] <= MENU["espresso"]["ingredients"]["coffee"]:
             print("Sorry there is not enough coffee.")
             return False
         else:
             return True
     else:
-        if resources["water"] < MENU[user_choice]["ingredients"]["water"]:
+        if resources["water"] <= MENU[user_choice]["ingredients"]["water"]:
             print("Sorry there is not enough water.")
             return False
-        elif resources["milk"] < MENU[user_choice]["ingredients"]["milk"]:
+        elif resources["milk"] <= MENU[user_choice]["ingredients"]["milk"]:
             print("Sorry there is not enough milk.")
             return False
-        elif resources["coffee"] < MENU[user_choice]["ingredients"]["coffee"]:
+        elif resources["coffee"] <= MENU[user_choice]["ingredients"]["coffee"]:
             print("Sorry there is not enough coffee.")
             return False
         else:
@@ -109,10 +110,13 @@ def make_coffee(user_choice):
     if user_choice == "espresso":
         resources["water"] = resources["water"] - MENU[user_choice]["ingredients"]["water"]
         resources["coffee"] = resources["coffee"] - MENU[user_choice]["ingredients"]["coffee"]
+        resources["money"] = resources["money"] + MENU[user_choice]["cost"]
+
     else:
         resources["water"] = resources["water"] - MENU[user_choice]["ingredients"]["water"]
         resources["milk"] = resources["milk"] - MENU[user_choice]["ingredients"]["milk"]
         resources["coffee"] = resources["coffee"] - MENU[user_choice]["ingredients"]["coffee"]
+        resources["money"] = resources["money"] + MENU[user_choice]["cost"]
     print(f"Here is Your {user_choice}. Enjoy!")
     coffee_machine()
 
